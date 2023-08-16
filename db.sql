@@ -71,6 +71,19 @@ CREATE TABLE commentaire (
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id),
     FOREIGN KEY (article_id) REFERENCES article(id)
 );
+CREATE SEQUENCE critere_sequence
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 999999999
+    NOCACHE
+    NOCYCLE;
+CREATE TABLE critere (
+    id NUMBER(5) PRIMARY KEY,
+    intitule VARCHAR2(200),
+    description CLOB,
+    appel_d_offre_id NUMBER(5) NOT NULL,
+    FOREIGN KEY (appel_d_offre_id) REFERENCES appel_d_offre(id)
+);
 
 insert into article (id,titre,description,date_de_publication) values (article_sequence.NEXTVAL,'article1','ceci est un test',SYSDATE);
 insert into article (id,titre,description,date_de_publication) values (article_sequence.NEXTVAL,'article2','ceci est un test',SYSDATE);

@@ -66,7 +66,34 @@ const getSoumissionAo = async (req, res) => {
     }
 }
 
+const getSoumissionAoDetail = async (req, res) => {
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
+        const id = req.query.id;
+        const result = await connection.execute(`SELECT * FROM soumission_ao sao join societe s in sao.societe_id=s.id join appel_d_offre
+         a in a.id=sao.appel_d_offre_id where sao.id=${id}`);
+        await connection.close();
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+}
+
+const getAppelDOffre = async (req, res) => {
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
+        const id = req.query.id;
+        const result = await connection.execute(`SELECT * FROM critere c join appel_d_offre a in c.appel_d_offre_id=a.id where a.id=${id}`);
+        await connection.close();
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+}
+
 module.exports = {
     getAll, getAllArticles, getArticleDetails,
-    getCommentaire, getSoumissionAo
+    getCommentaire, getSoumissionAo, getSoumissionAoDetail, getAppelDOffre
 };
