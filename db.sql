@@ -65,7 +65,7 @@ CREATE TABLE article (
 );
 CREATE TABLE commentaire (
     contenu CLOB,
-    date_com DATE,
+    date_com DATE DEFAULT SYSDATE,
     utilisateur_id NUMBER(5),
     article_id NUMBER(5),
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id),
@@ -90,10 +90,10 @@ insert into article (id,titre,description,date_de_publication) values (article_s
 
 insert into societe values (societe_sequence.NEXTVAL,'societe1','1234','1234','mdp');
 
-insert into utilisateur values (utilisateur_sequence.NEXTVAL,'user1','user1','1234','mdp','role','type',2);
+insert into utilisateur values (utilisateur_sequence.NEXTVAL,'user2','user2','1234','$2a$12$2Amq9M1v0KFXJLUzFKuIIOD1yZdgEjTZnzQmy4HKUbd62qeP8PYna','role','type',2);
 
-insert into commentaire values ('ceci est un test',SYSDATE,3,1);
-insert into commentaire values ('ceci est un test',SYSDATE,3,2);
+insert into commentaire (contenu, utilisateur_id, article_id) values ('ceci est un test',3,1);
+insert into commentaire (contenu, utilisateur_id, article_id) values ('ceci est un test',3,2);
 
 insert into appel_d_offre values (appel_d_offre_sequence.NEXTVAL,'ref1','titre','description test',SYSDATE,SYSDATE);
 
