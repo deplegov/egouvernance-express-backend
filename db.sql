@@ -49,6 +49,8 @@ CREATE TABLE utilisateur (
     role VARCHAR2(50),
     type VARCHAR2(50),
     societe_id NUMBER(5),
+    valide NUMBER DEFAULT 0,
+    active NUMBER DEFAULT 1,
     FOREIGN KEY (societe_id) REFERENCES societe(id)
 );
 CREATE SEQUENCE article_sequence
@@ -90,7 +92,8 @@ insert into article (id,titre,description,date_de_publication) values (article_s
 
 insert into societe values (societe_sequence.NEXTVAL,'societe1','1234','1234','mdp');
 
-insert into utilisateur values (utilisateur_sequence.NEXTVAL,'user2','user2','1234','$2a$12$2Amq9M1v0KFXJLUzFKuIIOD1yZdgEjTZnzQmy4HKUbd62qeP8PYna','role','type',2);
+insert into utilisateur (id,nom,prenom,email,password,role,type,societe_id) values 
+(utilisateur_sequence.NEXTVAL,'user2','user2','1234','$2a$12$2Amq9M1v0KFXJLUzFKuIIOD1yZdgEjTZnzQmy4HKUbd62qeP8PYna','role','type',2);
 
 insert into commentaire (contenu, utilisateur_id, article_id) values ('ceci est un test',3,1);
 insert into commentaire (contenu, utilisateur_id, article_id) values ('ceci est un test',3,2);
