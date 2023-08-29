@@ -1,6 +1,7 @@
 require("dotenv").config();
 const cors = require('cors');
 const express = require("express");
+const commentController = require("./controllers/comment");
 const userController = require("./controllers/user");
 const articleController = require("./controllers/article");
 const tenderController = require("./controllers/tender");
@@ -14,10 +15,11 @@ app.use(cors({
   origin: '*'
 }));
 app.use(express.json());
-app.use("/users", userController);
 app.use("/articles", articleController);
-app.use("/tenders", tenderController);
+app.use("/comments", commentController);
 app.use("/soumissions", soumissionController);
+app.use("/tenders", tenderController);
+app.use("/users", userController);
 
 mongoose
   .connect(process.env.MONGO_URI)

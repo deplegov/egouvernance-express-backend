@@ -6,7 +6,7 @@ const getCommentaire = async (req, res) => {
     const connection = await getConnection();
     const article_id = req.query.article_id;
     const result = await connection.execute(
-      `SELECT * FROM commentaire where article_id=${article_id}`,
+      `SELECT c.*, concat(concat(u.nom, ' '), u.prenom) utilisateur FROM commentaire c join utilisateur u on c.utilisateur_id=u.id where article_id=${article_id}`,
       [],
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
     );
@@ -43,7 +43,6 @@ const insertComment = async (req, res) => {
 };
 
 module.exports = {
-  
   getCommentaire,
   insertComment,
 };
