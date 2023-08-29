@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require('cors');
 const express = require("express");
 const userController = require("./controllers/user");
 const articleController = require("./controllers/article");
@@ -9,6 +10,9 @@ const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 80;
 
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json());
 app.use("/users", userController);
 app.use("/articles", articleController);
