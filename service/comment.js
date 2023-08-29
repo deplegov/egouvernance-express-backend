@@ -1,6 +1,9 @@
+const getConnection = require("../database/connection");
+const oracledb = require("oracledb");
+
 const getCommentaire = async (req, res) => {
   try {
-    const connection = await oracledb.getConnection(dbConfig);
+    const connection = await getConnection();
     const article_id = req.query.article_id;
     const result = await connection.execute(
       `SELECT * FROM commentaire where article_id=${article_id}`,
@@ -18,7 +21,7 @@ const getCommentaire = async (req, res) => {
 const insertComment = async (req, res) => {
   try {
     const { contenu, utilisateur_id, article_id } = req.body;
-    const connection = await oracledb.getConnection(dbConfig);
+    const connection = await getConnection();
     const insertQuery = `INSERT INTO commentaire (contenu, utilisateur_id, article_id) VALUES (:contenu, :utilisateur_id, :article_id)`;
     const bindParams = {
       contenu,

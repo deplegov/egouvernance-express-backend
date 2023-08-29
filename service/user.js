@@ -1,8 +1,11 @@
+const getConnection = require("../database/connection");
 const bcrypt = require("bcrypt");
+const oracledb = require("oracledb");
+
 async function getUserByEmail(email) {
   let connection;
   try {
-    connection = await oracledb.getConnection(dbConfig);
+    connection = await getConnection();
     const query = "SELECT * FROM utilisateur WHERE email = :email";
     const result = await connection.execute(query, [email], {
       outFormat: oracledb.OUT_FORMAT_OBJECT,
@@ -48,7 +51,7 @@ const login = async (req, res) => {
 async function validateUser(userId) {
   let connection;
   try {
-    connection = await oracledb.getConnection(dbConfig);
+    connection = await getConnection();
 
     const updateQuery = `
         UPDATE utilisateur
@@ -94,7 +97,7 @@ const validate = async (req, res) => {
 async function activateUser(userId) {
   let connection;
   try {
-    connection = await oracledb.getConnection(dbConfig);
+    connection = await getConnection();
 
     const updateQuery = `
         UPDATE utilisateur
@@ -140,7 +143,7 @@ const activate = async (req, res) => {
 async function deactivateUser(userId) {
   let connection;
   try {
-    connection = await oracledb.getConnection(dbConfig);
+    connection = await getConnection();
 
     const updateQuery = `
         UPDATE utilisateur
@@ -194,7 +197,7 @@ async function insertUser(
 ) {
   let connection;
   try {
-    connection = await oracledb.getConnection(dbConfig);
+    connection = await getConnection();
     const query =
       "INSERT INTO utilisateur (id,nom,prenom,email,password,role,type,societe_id) VALUES (utilisateur_sequence.NEXTVAL, :nom, :prenom, :email, :password, :role, :type, :societe_id)";
     const bindParams = {
@@ -264,7 +267,7 @@ const signup = async (req, res) => {
 async function updateUserDb(id, newData) {
   let connection;
   try {
-    connection = await oracledb.getConnection(dbConfig);
+    connection = await getConnection();
 
     const updateQuery = `
         UPDATE utilisateur
