@@ -2,6 +2,27 @@ const getConnection = require("../database/connection");
 const bcrypt = require("bcrypt");
 const oracledb = require("oracledb");
 
+const getUsers = async (req, res) => {
+  try {
+    const connection = await getConnection();
+    let wheres = [];
+    if(req.query.nom) wheres.push(`NOM = '${req.query.nom}'`);
+    if(req.query.active) wheres.push(`ACTIVE = '${req.query.active}'`);
+    wheres = wheres.join(' AND ');
+    if(wheres!=='') wheres = ` WHERE ${wheres}`;
+    const result = await connection.execute(
+      `SELECT * FROM utilisateur ${wheres}`,
+      [],
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
+    await connection.close();
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
 async function getUserByEmail(email) {
   let connection;
   try {
@@ -324,5 +345,6 @@ module.exports = {
   deactivate,
   updateUser,
   signup,
-  getUser
+  getUser,
+  getUsers
 };

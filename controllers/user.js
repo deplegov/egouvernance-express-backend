@@ -8,8 +8,10 @@ const {
   signup,
   getUser,
   updateUser,
+  getUsers,
 } = require("../service/user");
 
+router.get("/", getUsers);
 router.post("/login", login);
 router.put("/validate/:userId", validate);
 router.put("/activate/:userId", activate);
