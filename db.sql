@@ -94,7 +94,7 @@ insert into article (id,titre,description,date_de_publication) values (article_s
 -- insert into societe values (societe_sequence.NEXTVAL,'societe1','1234','1234','mdp');
 
 insert into utilisateur (id,nom,prenom,email,password,role,type) values 
-(utilisateur_sequence.NEXTVAL,'user1','user1','1234','$2a$12$2Amq9M1v0KFXJLUzFKuIIOD1yZdgEjTZnzQmy4HKUbd62qeP8PYna','role','type');
+(utilisateur_sequence.NEXTVAL,'Rabenantoandro','Luc','luc.rabe@gmail.com','$10$D0l3RxGl9PAjzUegDbx76.l998RVp9IzIOQxHKNflqvV.GtZ9tInK','Citoyen','Utilisateur');
 
 insert into commentaire (contenu, utilisateur_id, article_id) values ('ceci est un test 1',2,2);
 insert into commentaire (contenu, utilisateur_id, article_id) values ('ceci est un test 2',2,3);
