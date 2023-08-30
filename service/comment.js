@@ -18,6 +18,23 @@ const getCommentaire = async (req, res) => {
   }
 };
 
+const getCountCommentaire = async (req, res) => {
+  try {
+    const connection = await getConnection();
+    const article_id = req.query.article_id;
+    const result = await connection.execute(
+      `SELECT count(*) count FROM commentaire c where article_id=${article_id}`,
+      [],
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
+    await connection.close();
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+
 const insertComment = async (req, res) => {
   try {
     const { contenu, utilisateur_id, article_id } = req.body;
@@ -45,4 +62,5 @@ const insertComment = async (req, res) => {
 module.exports = {
   getCommentaire,
   insertComment,
+  getCountCommentaire
 };
