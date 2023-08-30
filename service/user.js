@@ -8,6 +8,7 @@ const getUsers = async (req, res) => {
     let wheres = [];
     if(req.query.nom) wheres.push(`NOM = '${req.query.nom}'`);
     if(req.query.active) wheres.push(`ACTIVE = '${req.query.active}'`);
+    if(req.query.valide) wheres.push(`VALIDE = '${req.query.valide}'`);
     wheres = wheres.join(' AND ');
     if(wheres!=='') wheres = ` WHERE ${wheres}`;
     const result = await connection.execute(
