@@ -265,8 +265,7 @@ async function updateUserDb(id, newData) {
 
     const updateQuery = `
         UPDATE utilisateur
-        SET nom = :nom, prenom = :prenom, email = :email, password = :password
-        , role = :role, type = :type, societe_id = :societe_id
+        SET nom = :nom, prenom = :prenom, email = :email
         WHERE id = :id
       `;
 
@@ -275,10 +274,6 @@ async function updateUserDb(id, newData) {
       nom: newData.nom,
       prenom: newData.prenom,
       email: newData.email,
-      password: await bcrypt.hash(newData.password, 10),
-      role: newData.role,
-      type: newData.type,
-      societe_id: newData.societe_id,
     };
 
     const result = await connection.execute(updateQuery, bindParams, {
@@ -304,14 +299,14 @@ const updateUser = async (req, res) => {
     const { id } = req.params;
     const newData = req.body;
 
-    if (
-      newData.password !== "" &&
-      newData.password !== newData.confirmPassword
-    ) {
-      return res
-        .status(400)
-        .json({ message: "Veuillez confirmer le mot de passe" });
-    }
+    // if (
+    //   newData.password !== "" &&
+    //   newData.password !== newData.confirmPassword
+    // ) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Veuillez confirmer le mot de passe" });
+    // }
 
     const result = await updateUserDb(id, newData);
 
