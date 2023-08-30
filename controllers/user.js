@@ -6,6 +6,7 @@ const {
   activate,
   deactivate,
   signup,
+  getUser,
   updateUser,
 } = require("../service/user");
 
@@ -14,6 +15,7 @@ router.put("/validate/:userId", validate);
 router.put("/activate/:userId", activate);
 router.put("/deactivate/:userId", deactivate);
 router.post("/", signup);
+router.get("/:id", getUser);
 router.put("/:id", updateUser);
 
 module.exports = router;
