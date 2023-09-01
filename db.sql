@@ -48,7 +48,7 @@ CREATE TABLE utilisateur (
     password VARCHAR2(255),
     role VARCHAR2(50),
     type VARCHAR2(50),
-    -- societe_id NUMBER(5),
+    societe_id VARCHAR2(255),
     valide NUMBER DEFAULT 0,
     active NUMBER DEFAULT 1
     -- FOREIGN KEY (societe_id) REFERENCES societe(id)

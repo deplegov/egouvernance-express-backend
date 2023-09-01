@@ -6,6 +6,7 @@ const userController = require("./controllers/user");
 const articleController = require("./controllers/article");
 const tenderController = require("./controllers/tender");
 const soumissionController = require("./controllers/soumission");
+const societyController = require("./controllers/society");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -14,9 +15,13 @@ const PORT = process.env.PORT || 80;
 app.use(cors({
   origin: '*'
 }));
+
 app.use(express.json());
+app.use("/files", express.static('./public/files'));
+
 app.use("/articles", articleController);
 app.use("/comments", commentController);
+app.use("/societies", societyController);
 app.use("/soumissions", soumissionController);
 app.use("/tenders", tenderController);
 app.use("/users", userController);

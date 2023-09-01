@@ -227,12 +227,12 @@ const deactivate = async (req, res) => {
   }
 };
 
-async function insertUser(nom, prenom, email, password, role, type) {
+async function insertUser(nom, prenom, email, password, role, type, societe) {
   let connection;
   try {
     connection = await getConnection();
     const query =
-      "INSERT INTO utilisateur (id,nom,prenom,email,password,role,type) VALUES (utilisateur_sequence.NEXTVAL, :nom, :prenom, :email, :password, :role, :type)";
+      "INSERT INTO utilisateur (id,nom,prenom,email,password,role,type, societe_id) VALUES (utilisateur_sequence.NEXTVAL, :nom, :prenom, :email, :password, :role, :type, :societe)";
     const bindParams = {
       nom,
       prenom,
@@ -240,6 +240,7 @@ async function insertUser(nom, prenom, email, password, role, type) {
       password,
       role,
       type,
+      societe
     };
     const result = await connection.execute(query, bindParams, {
       autoCommit: true,
@@ -261,7 +262,7 @@ async function insertUser(nom, prenom, email, password, role, type) {
 
 const signup = async (req, res) => {
   try {
-    const { nom, prenom, email, password, confirmPassword, role, type } =
+    const { nom, prenom, email, password, confirmPassword, role, type, societe_id } =
       req.body;
 
     if (password !== confirmPassword) {
@@ -271,7 +272,7 @@ const signup = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await insertUser(nom, prenom, email, hashedPassword, role, type);
+    await insertUser(nom, prenom, email, hashedPassword, role, type, societe_id);
 
     res.json({ message: "User registered successfully" });
   } catch (error) {
