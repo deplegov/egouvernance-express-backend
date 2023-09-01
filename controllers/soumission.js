@@ -4,6 +4,7 @@ const {
   getAll,
   getOne,
   soumissionNumber,
+  reussiteNumber,
 } = require("../service/soumission");
 const router = express.Router();
 const multer = require("multer");
@@ -23,6 +24,7 @@ var upload = multer({ storage });
 router.post("/", upload.array("files"), createSoumission);
 router.get("/", getAll);
 router.get("/count", soumissionNumber);
+router.get("/reussite", reussiteNumber);
 router.get("/:id", getOne);
 
 module.exports = router;

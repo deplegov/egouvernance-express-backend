@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 
 createSoumission = async (req, res) => {
   try {
-    const { society, dateSoumission, tender, status } = JSON.parse(req.body.data);
+    const { society, dateSoumission, tender, status } = JSON.parse(
+      req.body.data
+    );
     society._id = new mongoose.Types.ObjectId(society._id);
     tender._id = new mongoose.Types.ObjectId(tender._id);
     tender.dateEmission = new Date(tender.dateEmission);
@@ -14,7 +16,7 @@ createSoumission = async (req, res) => {
       dateSoumission,
       tender,
       status,
-      files: req.files.map(file=>file.filename),
+      files: req.files.map((file) => file.filename),
     });
     res.status(201).json({ soumission });
   } catch (err) {
@@ -78,9 +80,30 @@ soumissionNumber = async (req, res) => {
   }
 };
 
+reussiteNumber = async (req, res) => {
+  try {
+    let query = url.parse(req.url, true).query;
+    const criteria = {};
+    const soumissionDateCriteria = {};
+    if (query.date1) soumissionDateCriteria["$gte"] = query.date1;
+    if (query.date2) soumissionDateCriteria["$lte"] = query.date2;
+    if (Object.keys(soumissionDateCriteria).length > 0)
+      criteria.dateSoumission = soumissionDateCriteria;
+    criteria.status = 0;
+    const count0 = await Soumission.count(criteria);
+    criteria.status = 1;
+    const count1 = await Soumission.count(criteria);
+    let count = count1 * 100 / (count0 + count1);
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createSoumission,
   getAll,
   getOne,
   soumissionNumber,
+  reussiteNumber,
 };
