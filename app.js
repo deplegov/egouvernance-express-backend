@@ -1,4 +1,6 @@
 require("dotenv").config();
+const path = require('path');
+process.env['PATH'] = path.join(__dirname, '/instantclient') + ';' + process.env['PATH'];
 const cors = require('cors');
 const express = require("express");
 const commentController = require("./controllers/comment");
