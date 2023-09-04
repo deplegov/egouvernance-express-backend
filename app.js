@@ -15,7 +15,7 @@ const oracledb = require("oracledb");
 const app = express();
 const PORT = process.env.PORT || 80;
 
-oracledb.initOracleClient({ libDir: './instantclient/linux'})
+oracledb.initOracleClient({ libDir: './instantclient'})
 
 app.use(cors({
   origin: '*'
