@@ -10,9 +10,12 @@ const tenderController = require("./controllers/tender");
 const soumissionController = require("./controllers/soumission");
 const societyController = require("./controllers/society");
 const mongoose = require("mongoose");
+const oracledb = require("oracledb");
 
 const app = express();
 const PORT = process.env.PORT || 80;
+
+oracledb.initOracleClient({ libDir: './instantclient/linux'})
 
 app.use(cors({
   origin: '*'
